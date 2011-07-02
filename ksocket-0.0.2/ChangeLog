@@ -1,0 +1,15 @@
+Change log of sxg's ksocket project
+
+2008-05-15, ksocket version 0.0.2
+  o add KSOCKET_ADDR_SAFE macro for speed consideration
+  o add tcp client sample code
+  o other minor changes
+
+2007-09-09, ksocket version 0.0.1
+  o original version of ksocket
+  o provides the following BSD-style socket interfaces
+    *ksocket, kshutdown, kclose
+    *kbind, klisten, kconnect, kaccept
+    *krecv, ksend, krecvfrom, ksendto
+    *kgetsockname, kgetpeername, ksetsockopt
+

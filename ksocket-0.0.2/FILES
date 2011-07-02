@@ -1,0 +1,13 @@
+[file list]
+src/ksocket.h
+src/sxgdebug.h
+src/ksocket.c
+src/Makefile
+
+sample/ksocket_tcp_srv_demo.c
+sample/ksocket_tcp_cli_demo.c
+sample/Makefile
+
+[installed file list]
+/lib/modules/`uname -r`/kernel/net/ksocket/ksocket.ko
+/lib/modules/`uname -r`/build/include/net/ksocket.h

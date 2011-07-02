@@ -1,0 +1,59 @@
+*****HTTP Web Server Kernel Module*****
+*******************************
+Author: Gaurav Tungatkar
+
+Description:
+The simple http server as a kernel module. Implemented using workqueues. Does
+not handle concurrency. 
+
+One workqueue is used to just monitor the start parameter and start or stop the 
+server, the other does all the work.
+
+The server can be started or stopped usng the sysfs start switch. 
+/sys/module/kweb/parameters/start 
+
+The port, document root, index file and the type of files that can be served can
+be configured using procfs.
+/proc/kweb/*
+
+Code organization and directory structure:
+
+Project2
+    |__ kweb - All source files for kernel module in this directory
+	|__src
+	     |__kweb.c, Makefile, header files, Module.symvers of ksocket
+	|__index.html
+    |__ ksocket - All files of ksocket project in this directory
+    
+
+Some Design Decisions:
+1. ksocket.c has been modified to make kaccept() call non blocking.
+2. All input to a single proc fs entry must be given as a single string
+for eg. : echo ".html text/html\n .png image/png" > /proc/kweb/content_type
+3. No concurrency. Web server acts as a single thread. It can service only one request at a time.
+As per discussion with Yaogang, ok not to handle concurrency.
+
+Instructions to compile:
+1. Go to project2/kweb/src folder.
+2. make
+3. Go to project2/ksocket-0.0.2/src
+4. make
+
+If you do make clean in kweb/src, it will delete the Module.symvers file. This file then has to be explicitly copied from the ksocket folder.
+
+Instructions to run:
+First insert ksocket module and then kweb. kweb depends on ksocket.
+1. insmod project2/ksocket/src/ksocket.ko
+2. insmod project2/kweb/src/kweb.ko
+
+
+Limitations:
+1. Client may send requests in HTTP/1.0 or HTTP/1.1 version. However, server response is always HTTP/1.0 
+This folows the Robustness principle given in rfc 2145 http://www.ietf.org/rfc/rfc2145.txt
+2. Concurrency not handled.
+
+Logging:
+Logs can be turned off by defining TRACE to be 0 in log.h at compile time.
+
+Acknowledgements:
+Using the ksocket project ksocket.sourceforge.net

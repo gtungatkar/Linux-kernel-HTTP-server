@@ -1,0 +1,18 @@
+ksocket installtion instructions
+================================
+
+1) Usual steps:
+make && make install && modprobe ksocket
+
+2) How to run the sample codes
+# cd sample/tcp
+# make
+# insmod ksocket_tcp_srv_demo.ko port=8888
+; it will listen at the port 8888 waiting for client connections
+; telnet to that port to commnicate with the ksocket_tcp_srv module
+; see output of 'dmesg' will give you a surprise
+; send 'quit' to make the srv socket exit, then you can safely unload srv module
+
+# insmod ksocket_tcp_cli_demo.ko
+; it will connect your local sshd service
+; dmesg, you will find the module got some message form sshd
